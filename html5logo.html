@@ -33,6 +33,19 @@
 <script>
 (function () {
 
+	// http://paulirish.com/2011/requestanimationframe-for-smart-animating/
+	// shim layer with setTimeout fallback
+	window.requestAnimFrame = (function () {
+		return  window.requestAnimationFrame
+		|| window.webkitRequestAnimationFrame
+		|| window.mozRequestAnimationFrame
+		|| window.oRequestAnimationFrame
+		|| window.msRequestAnimationFrame
+		|| function (callback, element) {
+			window.setTimeout(callback, 1000 / 60);
+		};
+	})();
+
 	var WIDTH = 1000;
 	var HEIGHT = 676;
 
@@ -50,6 +63,31 @@
 	canvas.height = HEIGHT;
 	document.body.appendChild(canvas);
 	var ctx = canvas.getContext("2d");
+
+	var lastTick = 0;
+
+	var rayStart = 0;
+	var raySpeed = 0.25;
+
+	var loop = function (time) {
+		update(time);
+		drawBackground();
+		drawShield();
+		drawText();
+		requestAnimFrame(loop, canvas);
+	};
+
+	var update = function (time) {
+		if (lastTick == 0) {
+			lastTick = time;
+		}
+		var elapsed = (time - lastTick);
+		lastTick = time;
+		rayStart += ((raySpeed / 1000) * elapsed);
+		if (rayStart > 1) {
+			rayStart = 0;
+		}
+	};
 
 	var makeVector = function (angle) {
 		return {
@@ -102,7 +140,7 @@
 		for (var i = 0; i < rays.count; ++i) {
 
 			// Yay math!
-			var h = ((i * step) + (step / 2));
+			var h = (((i + rayStart) * step) + (step / 2));
 			var v = makeVector(h);
 			var v1 = makeVector(h - (Math.PI / 2));
 			var v2 = makeVector(h + (Math.PI / 2));
@@ -233,11 +271,7 @@
 
 	};
 
-	drawBackground();
-	drawShield();
-	drawText();
-
-	ctx = canvas = null;
+	loop(Date.now());
 
 }());
 </script>
