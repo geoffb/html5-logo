@@ -1,36 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>HTML5 Logo in Pure JavaScript by Geoff Blair</title>
-	<style>
-		body {
-			font-family: Arial, sans;
-		}
-		h1 {
-			font-size: 16px;
-		}
-		a {
-			color: #e34c26;
-			text-decoration: none;
-		}
-		a:hover {
-			text-decoration: underline;
-		}
-		.hd {
-			margin-bottom: 10px;
-		}
-	</style>
-</head>
-<body>
-	<div class="hd">
-		<h1>HTML5 Logo in JavaScript/Canvas by <a href="http://twitter.com/geoffblair" target="_blank">@geoffblair</a></h1>
-		<a
-			href="https://github.com/geoffb/html5logo-javascript"
-			title="HTML5 Logo in JavaScript on GitHub"
-			target="_blank"
-		>View the source on GitHub</a>
-	</div>
-<script>
 (function () {
 
 	// http://paulirish.com/2011/requestanimationframe-for-smart-animating/
@@ -274,6 +241,3 @@
 	loop(Date.now());
 
 }());
-</script>
-</body>
-</html>
